@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 RC Car</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #0b111e;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 { margin-bottom: 30px; }
+        .controls { display: inline-block; }
+        .btn {
+            padding: 18px 32px;
+            margin: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            background: #1a73e8;
+            color: white;
+            border-radius: 12px;
+            touch-action: manipulation;
+        }
+        .btn:active { background: #0b4182; }
+        .btn-stop { background: #d93025; }
+        .btn-stop:active { background: #a50e0e; }
+    </style>
+</head>
+<body>
+    <h2>RC CAR CONTROL</h2>
+    <div class="controls">
+        <button class="btn" onclick="sendCmd('FORWARD')">▲ FORWARD</button><br>
+        <button class="btn" onclick="sendCmd('LEFT')">◄ LEFT</button>
+        <button class="btn btn-stop" onclick="sendCmd('STOP')">■ STOP</button>
+        <button class="btn" onclick="sendCmd('RIGHT')">RIGHT ►</button><br>
+        <button class="btn" onclick="sendCmd('BACKWARD')">▼ BACKWARD</button>
+    </div>
+
+    <script>
+        function sendCmd(cmd) {
+            fetch('http://192.168.4.2/' + cmd, { method: 'GET', mode: 'no-cors' })
+                .catch(err => console.log('Sent:', cmd));
+        }
+    </script>
+</body>
+</html>
